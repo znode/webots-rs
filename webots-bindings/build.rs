@@ -20,6 +20,7 @@ fn main() {
             "Unrecognized OS. Please set WEBOTS_PATH so that we can find your Webots installation."
         );
     };
+
     let lib_path = PathBuf::from(&webots_path).join("lib/controller");
     let include_path = PathBuf::from(&webots_path).join("include/controller/c");
 
@@ -30,7 +31,7 @@ fn main() {
 
     let bindings = bindgen::Builder::default()
         .header("wrapper.h")
-        .parse_callbacks(Box::new(bindgen::CargoCallbacks))
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
         .clang_args(vec!["-I", include_path.to_str().unwrap()])
         .blocklist_item("FP_INFINITE")
         .blocklist_item("FP_NAN")
