@@ -16,10 +16,10 @@ impl From<u32> for JointType {
     }
 }
 
-impl Into<u32> for JointType {
+impl From<JointType> for u32 {
     #[allow(non_upper_case_globals)]
-    fn into(self) -> u32 {
-        match self {
+    fn from(val: JointType) -> Self {
+        match val {
             JointType::Rotational => WbJointType_WB_ROTATIONAL,
             JointType::Linear => WbJointType_WB_LINEAR,
         }

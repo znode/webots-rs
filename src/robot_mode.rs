@@ -21,10 +21,10 @@ impl From<u32> for RobotMode {
     }
 }
 
-impl Into<u32> for RobotMode {
+impl From<RobotMode> for u32 {
     #[allow(non_upper_case_globals)]
-    fn into(self) -> u32 {
-        match self {
+    fn from(val: RobotMode) -> Self {
+        match val {
             RobotMode::Simulation => WbRobotMode_WB_MODE_SIMULATION,
             RobotMode::CrossCompilation => WbRobotMode_WB_MODE_CROSS_COMPILATION,
             RobotMode::RemoteControl => WbRobotMode_WB_MODE_REMOTE_CONTROL,

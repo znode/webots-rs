@@ -36,15 +36,15 @@ impl TouchSensor {
         unsafe { wb_touch_sensor_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_touch_sensor_get_sampling_period(self.0) }
     }
 
-    pub fn get_value(&self) -> f64 {
+    pub fn value(&self) -> f64 {
         unsafe { wb_touch_sensor_get_value(self.0) }
     }
 
-    pub fn get_values(&self) -> Result<[f64; 3], TouchSensorError> {
+    pub fn values(&self) -> Result<[f64; 3], TouchSensorError> {
         unsafe {
             let values = wb_touch_sensor_get_values(self.0);
             if values.is_null() {
@@ -54,12 +54,12 @@ impl TouchSensor {
         }
     }
 
-    pub fn get_lookup_table_size(&self) -> i32 {
+    pub fn lookup_table_size(&self) -> i32 {
         unsafe { wb_touch_sensor_get_lookup_table_size(self.0) }
     }
 
-    pub fn get_lookup_table(&self) -> Result<&[f64], TouchSensorError> {
-        let lookup_table_size = self.get_lookup_table_size();
+    pub fn lookup_table(&self) -> Result<&[f64], TouchSensorError> {
+        let lookup_table_size = self.lookup_table_size();
         unsafe {
             let lookup_table = wb_touch_sensor_get_lookup_table(self.0);
             if lookup_table.is_null() {
@@ -69,7 +69,7 @@ impl TouchSensor {
         }
     }
 
-    pub fn get_type(&self) -> TouchSensorType {
+    pub fn type_(&self) -> TouchSensorType {
         unsafe { wb_touch_sensor_get_type(self.0).into() }
     }
 }

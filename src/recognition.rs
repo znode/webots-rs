@@ -52,16 +52,16 @@ impl Recognition {
         unsafe { wb_camera_recognition_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_camera_recognition_get_sampling_period(self.0) }
     }
 
-    pub fn get_number_of_objects(&self) -> i32 {
+    pub fn number_of_objects(&self) -> i32 {
         unsafe { wb_camera_recognition_get_number_of_objects(self.0) }
     }
 
-    pub fn get_objects<'a>(&self) -> Result<Vec<RecognitionObject<'a>>, RecognitionError> {
-        let number_of_objects = self.get_number_of_objects();
+    pub fn objects<'a>(&self) -> Result<Vec<RecognitionObject<'a>>, RecognitionError> {
+        let number_of_objects = self.number_of_objects();
         let objects = unsafe {
             let objects = wb_camera_recognition_get_objects(self.0);
             if objects.is_null() {
@@ -103,10 +103,10 @@ impl Recognition {
         unsafe { wb_camera_recognition_is_segmentation_enabled(self.0) != 0 }
     }
 
-    pub fn get_segmentation_image(&self) -> &[u8] {
+    pub fn segmentation_image(&self) -> &[u8] {
         let camera = Camera::new(self.0);
-        let width = camera.get_width();
-        let height = camera.get_height();
+        let width = camera.width();
+        let height = camera.height();
         unsafe {
             let image = wb_camera_recognition_get_segmentation_image(self.0);
             from_raw_parts(image, (width * height * 4) as usize)

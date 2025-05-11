@@ -32,15 +32,15 @@ impl InertialUnit {
         unsafe { wb_inertial_unit_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_inertial_unit_get_sampling_period(self.0) }
     }
 
-    pub fn get_noise(&self) -> f64 {
+    pub fn noise(&self) -> f64 {
         unsafe { wb_inertial_unit_get_noise(self.0) }
     }
 
-    pub fn get_roll_pitch_yaw(&self) -> Result<[f64; 3], InertialUnitError> {
+    pub fn roll_pitch_yaw(&self) -> Result<[f64; 3], InertialUnitError> {
         unsafe {
             let roll_pitch_yaw = wb_inertial_unit_get_roll_pitch_yaw(self.0);
             if roll_pitch_yaw.is_null() {
@@ -54,7 +54,7 @@ impl InertialUnit {
         }
     }
 
-    pub fn get_quaternion(&self) -> Result<[f64; 4], InertialUnitError> {
+    pub fn quaternion(&self) -> Result<[f64; 4], InertialUnitError> {
         unsafe {
             let quaternion = wb_inertial_unit_get_quaternion(self.0);
             if quaternion.is_null() {

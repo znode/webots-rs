@@ -12,14 +12,14 @@ fn main() {
     let distance_sensors: Vec<DistanceSensor> = distance_sensor_names
         .iter()
         .map(|name| {
-            let sensor = Robot::get_distance_sensor(name);
+            let sensor = Robot::distance_sensor(name);
             sensor.enable(TIME_STEP);
             sensor
         })
         .collect();
 
-    let left_motor = Robot::get_motor("left wheel motor");
-    let right_motor = Robot::get_motor("right wheel motor");
+    let left_motor = Robot::motor("left wheel motor");
+    let right_motor = Robot::motor("right wheel motor");
     left_motor.set_position(INFINITY);
     right_motor.set_position(INFINITY);
 
@@ -33,7 +33,7 @@ fn main() {
 
         let distance_values: Vec<f64> = distance_sensors
             .iter()
-            .map(|sensor| sensor.get_value())
+            .map(|sensor| sensor.value())
             .collect();
 
         // detect obsctacles

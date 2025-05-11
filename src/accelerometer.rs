@@ -34,16 +34,16 @@ impl Accelerometer {
         unsafe { wb_accelerometer_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_accelerometer_get_sampling_period(self.0) }
     }
 
-    pub fn get_lookup_table_size(&self) -> i32 {
+    pub fn lookup_table_size(&self) -> i32 {
         unsafe { wb_accelerometer_get_lookup_table_size(self.0) }
     }
 
-    pub fn get_lookup_table(&self) -> Result<&[f64], AccelerometerError> {
-        let lookup_table_size = self.get_lookup_table_size();
+    pub fn lookup_table(&self) -> Result<&[f64], AccelerometerError> {
+        let lookup_table_size = self.lookup_table_size();
         unsafe {
             let lookup_table = wb_accelerometer_get_lookup_table(self.0);
             if lookup_table.is_null() {
@@ -53,7 +53,7 @@ impl Accelerometer {
         }
     }
 
-    pub fn get_values(&self) -> Result<[f64; 3], AccelerometerError> {
+    pub fn values(&self) -> Result<[f64; 3], AccelerometerError> {
         unsafe {
             let values = wb_accelerometer_get_values(self.0);
             if values.is_null() {

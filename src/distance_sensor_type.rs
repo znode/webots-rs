@@ -24,10 +24,10 @@ impl From<u32> for DistanceSensorType {
     }
 }
 
-impl Into<u32> for DistanceSensorType {
+impl From<DistanceSensorType> for u32 {
     #[allow(non_upper_case_globals)]
-    fn into(self) -> u32 {
-        match self {
+    fn from(val: DistanceSensorType) -> Self {
+        match val {
             DistanceSensorType::Generic => WbDistanceSensorType_WB_DISTANCE_SENSOR_GENERIC,
             DistanceSensorType::InfraLed => WbDistanceSensorType_WB_DISTANCE_SENSOR_INFRA_RED,
             DistanceSensorType::Sonar => WbDistanceSensorType_WB_DISTANCE_SENSOR_SONAR,

@@ -36,32 +36,32 @@ impl DistanceSensor {
         unsafe { wb_distance_sensor_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_distance_sensor_get_sampling_period(self.0) }
     }
 
-    pub fn get_value(&self) -> f64 {
+    pub fn value(&self) -> f64 {
         unsafe { wb_distance_sensor_get_value(self.0) }
     }
 
-    pub fn get_max_value(&self) -> f64 {
+    pub fn max_value(&self) -> f64 {
         unsafe { wb_distance_sensor_get_max_value(self.0) }
     }
 
-    pub fn get_min_value(&self) -> f64 {
+    pub fn min_value(&self) -> f64 {
         unsafe { wb_distance_sensor_get_min_value(self.0) }
     }
 
-    pub fn get_aperture(&self) -> f64 {
+    pub fn aperture(&self) -> f64 {
         unsafe { wb_distance_sensor_get_aperture(self.0) }
     }
 
-    pub fn get_lookup_table_size(&self) -> i32 {
+    pub fn lookup_table_size(&self) -> i32 {
         unsafe { wb_distance_sensor_get_lookup_table_size(self.0) }
     }
 
-    pub fn get_lookup_table(&self) -> Result<&[f64], DistanceSensorError> {
-        let lookup_table_size = self.get_lookup_table_size();
+    pub fn lookup_table(&self) -> Result<&[f64], DistanceSensorError> {
+        let lookup_table_size = self.lookup_table_size();
         unsafe {
             let lookup_table = wb_distance_sensor_get_lookup_table(self.0);
             if lookup_table.is_null() {
@@ -71,7 +71,7 @@ impl DistanceSensor {
         }
     }
 
-    pub fn get_type(&self) -> DistanceSensorType {
+    pub fn type_(&self) -> DistanceSensorType {
         unsafe { wb_distance_sensor_get_type(self.0).into() }
     }
 }

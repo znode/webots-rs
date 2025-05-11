@@ -21,10 +21,10 @@ impl From<u32> for TouchSensorType {
     }
 }
 
-impl Into<u32> for TouchSensorType {
+impl From<TouchSensorType> for u32 {
     #[allow(non_upper_case_globals)]
-    fn into(self) -> u32 {
-        match self {
+    fn from(val: TouchSensorType) -> Self {
+        match val {
             TouchSensorType::Bumber => WbTouchSensorType_WB_TOUCH_SENSOR_BUMPER,
             TouchSensorType::Force => WbTouchSensorType_WB_TOUCH_SENSOR_FORCE,
             TouchSensorType::Force3D => WbTouchSensorType_WB_TOUCH_SENSOR_FORCE3D,

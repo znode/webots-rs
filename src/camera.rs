@@ -37,13 +37,13 @@ impl Camera {
         unsafe { wb_camera_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_camera_get_sampling_period(self.0) }
     }
 
-    pub fn get_image(&self) -> Result<&[u8], CameraError> {
-        let width = self.get_width();
-        let height = self.get_height();
+    pub fn image(&self) -> Result<&[u8], CameraError> {
+        let width = self.width();
+        let height = self.height();
         unsafe {
             let image = wb_camera_get_image(self.0);
             if image.is_null() {
@@ -53,23 +53,23 @@ impl Camera {
         }
     }
 
-    pub fn get_width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         unsafe { wb_camera_get_width(self.0) }
     }
 
-    pub fn get_height(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         unsafe { wb_camera_get_height(self.0) }
     }
 
-    pub fn get_fov(&self) -> f64 {
+    pub fn fov(&self) -> f64 {
         unsafe { wb_camera_get_fov(self.0) }
     }
 
-    pub fn get_max_fov(&self) -> f64 {
+    pub fn max_fov(&self) -> f64 {
         unsafe { wb_camera_get_max_fov(self.0) }
     }
 
-    pub fn get_min_fov(&self) -> f64 {
+    pub fn min_fov(&self) -> f64 {
         unsafe { wb_camera_get_min_fov(self.0) }
     }
 
@@ -77,7 +77,7 @@ impl Camera {
         unsafe { wb_camera_set_fov(self.0, fov) }
     }
 
-    pub fn get_exposure(&self) -> f64 {
+    pub fn exposure(&self) -> f64 {
         unsafe { wb_camera_get_exposure(self.0) }
     }
 
@@ -85,19 +85,19 @@ impl Camera {
         unsafe { wb_camera_set_exposure(self.0, exposure) }
     }
 
-    pub fn get_focal_length(&self) -> f64 {
+    pub fn focal_length(&self) -> f64 {
         unsafe { wb_camera_get_focal_length(self.0) }
     }
 
-    pub fn get_focal_distance(&self) -> f64 {
+    pub fn focal_distance(&self) -> f64 {
         unsafe { wb_camera_get_focal_distance(self.0) }
     }
 
-    pub fn get_max_focal_distance(&self) -> f64 {
+    pub fn max_focal_distance(&self) -> f64 {
         unsafe { wb_camera_get_max_focal_distance(self.0) }
     }
 
-    pub fn get_min_focal_distance(&self) -> f64 {
+    pub fn min_focal_distance(&self) -> f64 {
         unsafe { wb_camera_get_min_focal_distance(self.0) }
     }
 
@@ -105,7 +105,7 @@ impl Camera {
         unsafe { wb_camera_set_focal_distance(self.0, focal_distance) }
     }
 
-    pub fn get_near(&self) -> f64 {
+    pub fn near(&self) -> f64 {
         unsafe { wb_camera_get_near(self.0) }
     }
 
@@ -118,7 +118,7 @@ impl Camera {
         unsafe { wb_camera_has_recognition(self.0) != 0 }
     }
 
-    pub fn get_recognition(&self) -> Recognition {
+    pub fn recognition(&self) -> Recognition {
         Recognition::new(self.0)
     }
 }

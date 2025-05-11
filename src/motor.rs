@@ -67,11 +67,11 @@ impl Motor {
         unsafe { wb_motor_disable_force_feedback(self.0) }
     }
 
-    pub fn get_force_feedback_sampling_period(&self) -> i32 {
+    pub fn force_feedback_sampling_period(&self) -> i32 {
         unsafe { wb_motor_get_force_feedback_sampling_period(self.0) }
     }
 
-    pub fn get_force_feedback(&self) -> f64 {
+    pub fn force_feedback(&self) -> f64 {
         unsafe { wb_motor_get_force_feedback(self.0) }
     }
 
@@ -83,67 +83,67 @@ impl Motor {
         unsafe { wb_motor_disable_torque_feedback(self.0) }
     }
 
-    pub fn get_torque_feedback_sampling_period(&self) -> i32 {
+    pub fn torque_feedback_sampling_period(&self) -> i32 {
         unsafe { wb_motor_get_torque_feedback_sampling_period(self.0) }
     }
 
-    pub fn get_torque_feedback(&self) -> f64 {
+    pub fn torque_feedback(&self) -> f64 {
         unsafe { wb_motor_get_torque_feedback(self.0) }
     }
 
-    pub fn get_type(&self) -> JointType {
+    pub fn type_(&self) -> JointType {
         unsafe { wb_motor_get_type(self.0).into() }
     }
 
-    pub fn get_target_position(&self) -> f64 {
+    pub fn target_position(&self) -> f64 {
         unsafe { wb_motor_get_target_position(self.0) }
     }
 
-    pub fn get_min_position(&self) -> f64 {
+    pub fn min_position(&self) -> f64 {
         unsafe { wb_motor_get_min_position(self.0) }
     }
 
-    pub fn get_max_position(&self) -> f64 {
+    pub fn max_position(&self) -> f64 {
         unsafe { wb_motor_get_max_position(self.0) }
     }
 
-    pub fn get_velocity(&self) -> f64 {
+    pub fn velocity(&self) -> f64 {
         unsafe { wb_motor_get_velocity(self.0) }
     }
 
-    pub fn get_max_velocity(&self) -> f64 {
+    pub fn max_velocity(&self) -> f64 {
         unsafe { wb_motor_get_max_velocity(self.0) }
     }
 
-    pub fn get_acceleration(&self) -> f64 {
+    pub fn acceleration(&self) -> f64 {
         unsafe { wb_motor_get_acceleration(self.0) }
     }
 
-    pub fn get_available_force(&self) -> f64 {
+    pub fn available_force(&self) -> f64 {
         unsafe { wb_motor_get_available_force(self.0) }
     }
 
-    pub fn get_max_force(&self) -> f64 {
+    pub fn max_force(&self) -> f64 {
         unsafe { wb_motor_get_max_force(self.0) }
     }
 
-    pub fn get_available_torque(&self) -> f64 {
+    pub fn available_torque(&self) -> f64 {
         unsafe { wb_motor_get_available_torque(self.0) }
     }
 
-    pub fn get_max_torque(&self) -> f64 {
+    pub fn max_torque(&self) -> f64 {
         unsafe { wb_motor_get_max_torque(self.0) }
     }
 
-    pub fn get_multiplier(&self) -> f64 {
+    pub fn multiplier(&self) -> f64 {
         unsafe { wb_motor_get_multiplier(self.0) }
     }
 
-    pub fn get_brake(&self) -> Brake {
+    pub fn brake(&self) -> Brake {
         Brake::new(unsafe { wb_motor_get_brake(self.0) })
     }
 
-    pub fn get_position_sensor(&self) -> PositionSensor {
+    pub fn position_sensor(&self) -> PositionSensor {
         PositionSensor::new(unsafe { wb_motor_get_position_sensor(self.0) })
     }
 }

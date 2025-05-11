@@ -33,16 +33,16 @@ impl Gyro {
         unsafe { wb_gyro_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_gyro_get_sampling_period(self.0) }
     }
 
-    pub fn get_lookup_table_size(&self) -> i32 {
+    pub fn lookup_table_size(&self) -> i32 {
         unsafe { wb_gyro_get_lookup_table_size(self.0) }
     }
 
-    pub fn get_lookup_table(&self) -> Result<&[f64], GyroError> {
-        let lookup_table_size = self.get_lookup_table_size();
+    pub fn lookup_table(&self) -> Result<&[f64], GyroError> {
+        let lookup_table_size = self.lookup_table_size();
         unsafe {
             let lookup_table = wb_gyro_get_lookup_table(self.0);
             if lookup_table.is_null() {
@@ -52,7 +52,7 @@ impl Gyro {
         }
     }
 
-    pub fn get_values(&self) -> Result<[f64; 3], GyroError> {
+    pub fn values(&self) -> Result<[f64; 3], GyroError> {
         unsafe {
             let values = wb_gyro_get_values(self.0);
             if values.is_null() {

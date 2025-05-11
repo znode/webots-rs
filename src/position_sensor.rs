@@ -25,23 +25,23 @@ impl PositionSensor {
         unsafe { wb_position_sensor_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_position_sensor_get_sampling_period(self.0) }
     }
 
-    pub fn get_value(&self) -> f64 {
+    pub fn value(&self) -> f64 {
         unsafe { wb_position_sensor_get_value(self.0) }
     }
 
-    pub fn get_type(&self) -> JointType {
+    pub fn type_(&self) -> JointType {
         unsafe { wb_position_sensor_get_type(self.0).into() }
     }
 
-    pub fn get_motor(&self) -> Motor {
+    pub fn motor(&self) -> Motor {
         Motor::new(unsafe { wb_position_sensor_get_motor(self.0) })
     }
 
-    pub fn get_brake(&self) -> Brake {
+    pub fn brake(&self) -> Brake {
         Brake::new(unsafe { wb_position_sensor_get_brake(self.0) })
     }
 }

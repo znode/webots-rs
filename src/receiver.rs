@@ -32,11 +32,11 @@ impl Receiver {
         unsafe { wb_receiver_disable(self.0) }
     }
 
-    pub fn get_sampling_period(&self) -> i32 {
+    pub fn sampling_period(&self) -> i32 {
         unsafe { wb_receiver_get_sampling_period(self.0) }
     }
 
-    pub fn get_next_packet(&self) -> Result<Option<Packet>, ReceiverError> {
+    pub fn next_packet(&self) -> Result<Option<Packet>, ReceiverError> {
         let queue_length = unsafe { wb_receiver_get_queue_length(self.0) };
         if queue_length > 0 {
             let data = unsafe {
@@ -77,7 +77,7 @@ impl Receiver {
         unsafe { wb_receiver_set_channel(self.0, channel) }
     }
 
-    pub fn get_channel(&self) -> i32 {
+    pub fn channel(&self) -> i32 {
         unsafe { wb_receiver_get_channel(self.0) }
     }
 }

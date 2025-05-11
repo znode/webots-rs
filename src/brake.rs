@@ -19,15 +19,15 @@ impl Brake {
         unsafe { wb_brake_set_damping_constant(self.0, damping_constant) }
     }
 
-    pub fn get_type(&self) -> JointType {
+    pub fn type_(&self) -> JointType {
         unsafe { wb_brake_get_type(self.0).into() }
     }
 
-    pub fn get_motor(&self) -> Motor {
+    pub fn motor(&self) -> Motor {
         Motor::new(unsafe { wb_brake_get_motor(self.0) })
     }
 
-    pub fn get_position_sensor(&self) -> PositionSensor {
+    pub fn position_sensor(&self) -> PositionSensor {
         PositionSensor::new(unsafe { wb_brake_get_position_sensor(self.0) })
     }
 }
