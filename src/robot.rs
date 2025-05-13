@@ -11,7 +11,7 @@ use webots_bindings::{
 };
 
 use crate::{
-    Accelerometer, Brake, Camera, DistanceSensor, Gyro, InertialUnit, Keyboard, Motor,
+    Accelerometer, Brake, Camera, Device, DistanceSensor, Gyro, InertialUnit, Keyboard, Motor,
     PositionSensor, RangeFinder, Receiver, RobotMode, TouchSensor,
 };
 

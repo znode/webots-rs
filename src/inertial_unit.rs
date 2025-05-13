@@ -1,10 +1,12 @@
 use thiserror::Error;
 use webots_bindings::{
-    wb_device_get_node_type, wb_inertial_unit_disable, wb_inertial_unit_enable,
+    wb_device_get_name, wb_device_get_node_type, wb_inertial_unit_disable, wb_inertial_unit_enable,
     wb_inertial_unit_get_noise, wb_inertial_unit_get_quaternion,
     wb_inertial_unit_get_roll_pitch_yaw, wb_inertial_unit_get_sampling_period, WbDeviceTag,
     WbNodeType_WB_NODE_INERTIAL_UNIT,
 };
+
+use crate::{Device, Sensor};
 
 #[derive(Debug, Error)]
 pub enum InertialUnitError {
@@ -17,25 +19,6 @@ pub enum InertialUnitError {
 pub struct InertialUnit(WbDeviceTag);
 
 impl InertialUnit {
-    pub(crate) fn new(device: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_INERTIAL_UNIT, unsafe {
-            wb_device_get_node_type(device)
-        });
-        Self(device)
-    }
-
-    pub fn enable(&self, sampling_period: i32) {
-        unsafe { wb_inertial_unit_enable(self.0, sampling_period) }
-    }
-
-    pub fn disable(&self) {
-        unsafe { wb_inertial_unit_disable(self.0) }
-    }
-
-    pub fn sampling_period(&self) -> i32 {
-        unsafe { wb_inertial_unit_get_sampling_period(self.0) }
-    }
-
     pub fn noise(&self) -> f64 {
         unsafe { wb_inertial_unit_get_noise(self.0) }
     }
@@ -67,5 +50,47 @@ impl InertialUnit {
                 *quaternion.offset(3),
             ])
         }
+    }
+}
+
+impl Device for InertialUnit {
+    fn new(device: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_INERTIAL_UNIT, unsafe {
+            wb_device_get_node_type(device)
+        });
+        Self(device)
+    }
+
+    fn name(&self) -> &str {
+        unsafe {
+            let name = wb_device_get_name(self.0);
+            crate::utils::cstr_to_str(name).unwrap_or("Unknown")
+        }
+    }
+
+    fn model(&self) -> &str {
+        todo!()
+    }
+
+    fn node_type(&self) -> u32 {
+        todo!()
+    }
+}
+
+impl Sensor for InertialUnit {
+    fn enable(&self, sampling_period: i32) {
+        unsafe { wb_inertial_unit_enable(self.0, sampling_period) }
+    }
+
+    fn disable(&self) {
+        unsafe { wb_inertial_unit_disable(self.0) }
+    }
+
+    fn sampling_period(&self) -> i32 {
+        unsafe { wb_inertial_unit_get_sampling_period(self.0) }
+    }
+
+    fn set_sampling_period(&self, sampling_period: i32) {
+        todo!()
     }
 }

@@ -4,9 +4,11 @@ use thiserror::Error;
 use webots_bindings::{
     wb_accelerometer_disable, wb_accelerometer_enable, wb_accelerometer_get_lookup_table,
     wb_accelerometer_get_lookup_table_size, wb_accelerometer_get_sampling_period,
-    wb_accelerometer_get_values, wb_device_get_node_type, WbDeviceTag,
+    wb_accelerometer_get_values, wb_device_get_name, wb_device_get_node_type, WbDeviceTag,
     WbNodeType_WB_NODE_ACCELEROMETER,
 };
+
+use crate::{Device, Sensor};
 
 #[derive(Debug, Error)]
 pub enum AccelerometerError {
@@ -19,25 +21,6 @@ pub enum AccelerometerError {
 pub struct Accelerometer(WbDeviceTag);
 
 impl Accelerometer {
-    pub(crate) fn new(device: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_ACCELEROMETER, unsafe {
-            wb_device_get_node_type(device)
-        });
-        Self(device)
-    }
-
-    pub fn enable(&self, sampling_period: i32) {
-        unsafe { wb_accelerometer_enable(self.0, sampling_period) }
-    }
-
-    pub fn disable(&self) {
-        unsafe { wb_accelerometer_disable(self.0) }
-    }
-
-    pub fn sampling_period(&self) -> i32 {
-        unsafe { wb_accelerometer_get_sampling_period(self.0) }
-    }
-
     pub fn lookup_table_size(&self) -> i32 {
         unsafe { wb_accelerometer_get_lookup_table_size(self.0) }
     }
@@ -61,5 +44,47 @@ impl Accelerometer {
             }
             Ok([*values.offset(0), *values.offset(1), *values.offset(2)])
         }
+    }
+}
+
+impl Device for Accelerometer {
+    fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_ACCELEROMETER, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
+
+    fn name(&self) -> &str {
+        unsafe {
+            let name = wb_device_get_name(self.0);
+            crate::utils::cstr_to_str(name).unwrap_or("Unknown")
+        }
+    }
+
+    fn model(&self) -> &str {
+        unimplemented!()
+    }
+
+    fn node_type(&self) -> u32 {
+        unsafe { wb_device_get_node_type(self.0) }
+    }
+}
+
+impl Sensor for Accelerometer {
+    fn enable(&self, sampling_period: i32) {
+        unsafe { wb_accelerometer_enable(self.0, sampling_period) }
+    }
+
+    fn disable(&self) {
+        unsafe { wb_accelerometer_disable(self.0) }
+    }
+
+    fn sampling_period(&self) -> i32 {
+        unsafe { wb_accelerometer_get_sampling_period(self.0) }
+    }
+
+    fn set_sampling_period(&self, sampling_period: i32) {
+        unimplemented!("{sampling_period}")
     }
 }

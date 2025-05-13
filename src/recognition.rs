@@ -14,7 +14,7 @@ use webots_bindings::{
     WbNodeType_WB_NODE_CAMERA,
 };
 
-use crate::Camera;
+use crate::{Camera, Device};
 
 #[derive(Debug, Error)]
 pub enum RecognitionError {

@@ -1,4 +1,4 @@
-use webots::{DistanceSensor, Robot};
+use webots::{DistanceSensor, Robot, Sensor};
 
 fn main() {
     const INFINITY: f64 = 1.0 / 0.0;
