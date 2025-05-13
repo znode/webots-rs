@@ -1,6 +1,7 @@
 use webots_bindings::{
-    wb_altimeter_get_value, wb_device_get_name, wb_device_get_node_type, WbDeviceTag,
-    WbNodeType_WB_NODE_ALTIMETER,
+    wb_altimeter_disable, wb_altimeter_enable, wb_altimeter_get_sampling_period,
+    wb_altimeter_get_value, wb_device_get_model, wb_device_get_name, wb_device_get_node_type,
+    WbDeviceTag, WbNodeType_WB_NODE_ALTIMETER,
 };
 
 use crate::{Device, Sensor};
@@ -22,34 +23,39 @@ impl Device for Altimeter {
     }
     fn name(&self) -> &str {
         unsafe {
-            let name = wb_device_get_name(self.0);
-            crate::utils::cstr_to_str(name).unwrap_or("Unknown")
+            std::ffi::CStr::from_ptr(wb_device_get_name(self.0))
+                .to_str()
+                .unwrap()
         }
     }
 
     fn model(&self) -> &str {
-        todo!()
+        unsafe {
+            std::ffi::CStr::from_ptr(wb_device_get_model(self.0))
+                .to_str()
+                .unwrap()
+        }
     }
 
     fn node_type(&self) -> u32 {
-        todo!()
+        unsafe { wb_device_get_node_type(self.0) }
     }
 }
 
 impl Sensor for Altimeter {
     fn enable(&self, sampling_period: i32) {
-        todo!()
+        unsafe { wb_altimeter_enable(self.0, sampling_period) }
     }
 
     fn disable(&self) {
-        todo!()
+        unsafe { wb_altimeter_disable(self.0) }
     }
 
     fn sampling_period(&self) -> i32 {
-        todo!()
+        unsafe { wb_altimeter_get_sampling_period(self.0) }
     }
 
-    fn set_sampling_period(&self, sampling_period: i32) {
-        todo!()
+    fn set_sampling_period(&self, _sampling_period: i32) {
+        unimplemented!()
     }
 }

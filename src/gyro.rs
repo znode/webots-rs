@@ -2,9 +2,9 @@ use std::slice::from_raw_parts;
 
 use thiserror::Error;
 use webots_bindings::{
-    wb_device_get_name, wb_device_get_node_type, wb_gyro_disable, wb_gyro_enable,
-    wb_gyro_get_lookup_table, wb_gyro_get_lookup_table_size, wb_gyro_get_sampling_period,
-    wb_gyro_get_values, WbDeviceTag, WbNodeType_WB_NODE_GYRO,
+    wb_device_get_model, wb_device_get_name, wb_device_get_node_type, wb_gyro_disable,
+    wb_gyro_enable, wb_gyro_get_lookup_table, wb_gyro_get_lookup_table_size,
+    wb_gyro_get_sampling_period, wb_gyro_get_values, WbDeviceTag, WbNodeType_WB_NODE_GYRO,
 };
 
 use crate::{Device, Sensor};
@@ -47,26 +47,31 @@ impl Gyro {
 }
 
 impl Device for Gyro {
-    fn new(device: WbDeviceTag) -> Self {
+    fn new(tag: WbDeviceTag) -> Self {
         assert_eq!(WbNodeType_WB_NODE_GYRO, unsafe {
-            wb_device_get_node_type(device)
+            wb_device_get_node_type(tag)
         });
-        Self(device)
+        Self(tag)
     }
 
     fn name(&self) -> &str {
         unsafe {
-            let name = wb_device_get_name(self.0);
-            crate::utils::cstr_to_str(name).unwrap_or("Unknown")
+            std::ffi::CStr::from_ptr(wb_device_get_name(self.0))
+                .to_str()
+                .unwrap()
         }
     }
 
     fn model(&self) -> &str {
-        todo!()
+        unsafe {
+            std::ffi::CStr::from_ptr(wb_device_get_model(self.0))
+                .to_str()
+                .unwrap()
+        }
     }
 
     fn node_type(&self) -> u32 {
-        todo!()
+        unsafe { wb_device_get_node_type(self.0) }
     }
 }
 
@@ -83,7 +88,7 @@ impl Sensor for Gyro {
         unsafe { wb_gyro_get_sampling_period(self.0) }
     }
 
-    fn set_sampling_period(&self, sampling_period: i32) {
-        todo!()
+    fn set_sampling_period(&self, _sampling_period: i32) {
+        unimplemented!()
     }
 }

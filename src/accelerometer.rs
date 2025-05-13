@@ -4,8 +4,8 @@ use thiserror::Error;
 use webots_bindings::{
     wb_accelerometer_disable, wb_accelerometer_enable, wb_accelerometer_get_lookup_table,
     wb_accelerometer_get_lookup_table_size, wb_accelerometer_get_sampling_period,
-    wb_accelerometer_get_values, wb_device_get_name, wb_device_get_node_type, WbDeviceTag,
-    WbNodeType_WB_NODE_ACCELEROMETER,
+    wb_accelerometer_get_values, wb_device_get_model, wb_device_get_name, wb_device_get_node_type,
+    WbDeviceTag, WbNodeType_WB_NODE_ACCELEROMETER,
 };
 
 use crate::{Device, Sensor};
@@ -57,13 +57,18 @@ impl Device for Accelerometer {
 
     fn name(&self) -> &str {
         unsafe {
-            let name = wb_device_get_name(self.0);
-            crate::utils::cstr_to_str(name).unwrap_or("Unknown")
+            std::ffi::CStr::from_ptr(wb_device_get_name(self.0))
+                .to_str()
+                .unwrap()
         }
     }
 
     fn model(&self) -> &str {
-        unimplemented!()
+        unsafe {
+            std::ffi::CStr::from_ptr(wb_device_get_model(self.0))
+                .to_str()
+                .unwrap()
+        }
     }
 
     fn node_type(&self) -> u32 {

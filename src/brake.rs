@@ -1,7 +1,7 @@
 use webots_bindings::{
     wb_brake_get_motor, wb_brake_get_position_sensor, wb_brake_get_type,
-    wb_brake_set_damping_constant, wb_device_get_name, wb_device_get_node_type, WbDeviceTag,
-    WbNodeType_WB_NODE_BRAKE,
+    wb_brake_set_damping_constant, wb_device_get_model, wb_device_get_name,
+    wb_device_get_node_type, WbDeviceTag, WbNodeType_WB_NODE_BRAKE,
 };
 
 use crate::{Device, JointType, Motor, PositionSensor};
@@ -36,16 +36,21 @@ impl Device for Brake {
 
     fn name(&self) -> &str {
         unsafe {
-            let name = wb_device_get_name(self.0);
-            crate::utils::cstr_to_str(name).unwrap_or("Unknown")
+            std::ffi::CStr::from_ptr(wb_device_get_name(self.0))
+                .to_str()
+                .unwrap()
         }
     }
 
     fn model(&self) -> &str {
-        todo!()
+        unsafe {
+            std::ffi::CStr::from_ptr(wb_device_get_model(self.0))
+                .to_str()
+                .unwrap()
+        }
     }
 
     fn node_type(&self) -> u32 {
-        todo!()
+        unsafe { wb_device_get_node_type(self.0) }
     }
 }
