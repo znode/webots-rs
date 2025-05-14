@@ -10,6 +10,12 @@ use crate::{Device, Sensor};
 pub struct Compass(WbDeviceTag);
 
 impl Compass {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_COMPASS, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn values(&self) -> &[f64] {
         unsafe { std::slice::from_raw_parts(wb_compass_get_values(self.0), 3) }
     }
@@ -25,13 +31,6 @@ impl Compass {
 }
 
 impl Device for Compass {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_COMPASS, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

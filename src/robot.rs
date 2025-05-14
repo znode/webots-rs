@@ -15,14 +15,16 @@ use crate::{
     PositionSensor, RangeFinder, Receiver, RobotMode, TouchSensor,
 };
 
-pub struct Robot;
+pub struct Robot {
+    devices: Vec<Box<dyn Device>>,
+}
 
 impl Default for Robot {
     fn default() -> Self {
         unsafe {
             wb_robot_init();
         }
-        Self
+        Self { devices: vec![] }
     }
 }
 

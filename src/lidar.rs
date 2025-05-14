@@ -14,6 +14,12 @@ use crate::{Device, Sensor};
 pub struct Lidar(WbDeviceTag);
 
 impl Lidar {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_LIDAR, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn fov(&self) -> f64 {
         unsafe { wb_lidar_get_fov(self.0) }
     }
@@ -119,13 +125,6 @@ impl Lidar {
 }
 
 impl Device for Lidar {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_LIDAR, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

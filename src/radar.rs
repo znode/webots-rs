@@ -10,6 +10,13 @@ use crate::{Device, Sensor};
 pub struct Radar(WbDeviceTag);
 
 impl Radar {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_RADAR, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
+
     pub fn max_range(&self) -> f64 {
         unsafe { wb_radar_get_max_range(self.0) }
     }
@@ -41,13 +48,6 @@ impl Radar {
 }
 
 impl Device for Radar {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_RADAR, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

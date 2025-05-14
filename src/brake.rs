@@ -9,6 +9,12 @@ use crate::{Device, JointType, Motor, PositionSensor};
 pub struct Brake(WbDeviceTag);
 
 impl Brake {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_BRAKE, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn set_damping_constant(&self, damping_constant: f64) {
         unsafe { wb_brake_set_damping_constant(self.0, damping_constant) }
     }
@@ -27,13 +33,6 @@ impl Brake {
 }
 
 impl Device for Brake {
-    fn new(device: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_BRAKE, unsafe {
-            wb_device_get_node_type(device)
-        });
-        Self(device)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

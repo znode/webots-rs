@@ -22,6 +22,12 @@ pub enum CameraError {
 pub struct Camera(WbDeviceTag);
 
 impl Camera {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_CAMERA, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn image(&self) -> Result<&[u8], CameraError> {
         let width = self.width();
         let height = self.height();
@@ -105,13 +111,6 @@ impl Camera {
 }
 
 impl Device for Camera {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_CAMERA, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

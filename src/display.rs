@@ -18,6 +18,12 @@ pub struct ImageRef(WbImageRef);
 pub struct Display(WbDeviceTag);
 
 impl Display {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_DISPLAY, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn attach_camera(&self, camera: &Camera) {
         unsafe {
             wb_display_attach_camera(self.0, camera.tag());
@@ -141,13 +147,6 @@ impl Display {
 }
 
 impl Device for Display {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_DISPLAY, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

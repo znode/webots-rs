@@ -9,6 +9,12 @@ use crate::{Device, Sensor};
 pub struct Gps(WbDeviceTag);
 
 impl Gps {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_GPS, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn coordinate_system(&self) -> u32 {
         unsafe { wb_gps_get_coordinate_system(self.0) }
     }
@@ -27,13 +33,6 @@ impl Gps {
 }
 
 impl Device for Gps {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_GPS, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

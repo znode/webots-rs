@@ -9,19 +9,18 @@ use crate::{Device, Sensor};
 pub struct Altimeter(WbDeviceTag);
 
 impl Altimeter {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_ALTIMETER, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn value(&self) -> f64 {
         unsafe { wb_altimeter_get_value(self.0) }
     }
 }
 
 impl Device for Altimeter {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_ALTIMETER, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

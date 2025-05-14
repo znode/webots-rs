@@ -10,6 +10,13 @@ use crate::{Device, Sensor};
 pub struct LightSensor(WbDeviceTag);
 
 impl LightSensor {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert!({
+            let node_type = unsafe { wb_device_get_node_type(tag) };
+            node_type == WbNodeType_WB_NODE_LIGHT_SENSOR
+        });
+        LightSensor(tag)
+    }
     pub fn lookup_table(&self) -> &[f64] {
         unsafe {
             std::slice::from_raw_parts(
@@ -25,14 +32,6 @@ impl LightSensor {
 }
 
 impl Device for LightSensor {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert!({
-            let node_type = unsafe { wb_device_get_node_type(tag) };
-            node_type == WbNodeType_WB_NODE_LIGHT_SENSOR
-        });
-        LightSensor(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

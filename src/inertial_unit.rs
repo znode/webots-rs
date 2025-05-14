@@ -19,6 +19,12 @@ pub enum InertialUnitError {
 pub struct InertialUnit(WbDeviceTag);
 
 impl InertialUnit {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_INERTIAL_UNIT, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn noise(&self) -> f64 {
         unsafe { wb_inertial_unit_get_noise(self.0) }
     }
@@ -54,13 +60,6 @@ impl InertialUnit {
 }
 
 impl Device for InertialUnit {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_INERTIAL_UNIT, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

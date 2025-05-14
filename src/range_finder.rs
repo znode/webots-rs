@@ -13,6 +13,13 @@ use crate::{Device, Sensor};
 pub struct RangeFinder(WbDeviceTag);
 
 impl RangeFinder {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_RANGE_FINDER, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
+
     pub fn fov(&self) -> f64 {
         unsafe { wb_range_finder_get_fov(self.0) }
     }
@@ -66,13 +73,6 @@ impl RangeFinder {
 }
 
 impl Device for RangeFinder {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_RANGE_FINDER, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

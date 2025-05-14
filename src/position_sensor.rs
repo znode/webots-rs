@@ -10,6 +10,12 @@ use crate::{Brake, Device, JointType, Motor, Sensor};
 pub struct PositionSensor(WbDeviceTag);
 
 impl PositionSensor {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_POSITION_SENSOR, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn value(&self) -> f64 {
         unsafe { wb_position_sensor_get_value(self.0) }
     }
@@ -28,13 +34,6 @@ impl PositionSensor {
 }
 
 impl Device for PositionSensor {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_POSITION_SENSOR, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

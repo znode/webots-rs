@@ -18,6 +18,13 @@ pub enum ReceiverError {
 pub struct Receiver(WbDeviceTag);
 
 impl Receiver {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_RECEIVER, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
+
     pub fn bytes(&self) -> &[u8] {
         unsafe {
             std::slice::from_raw_parts(
@@ -119,13 +126,6 @@ pub struct Packet {
 }
 
 impl Device for Receiver {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_RECEIVER, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

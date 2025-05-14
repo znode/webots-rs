@@ -6,14 +6,16 @@ use webots_bindings::{
 use crate::Device;
 
 pub struct Emitter(WbDeviceTag);
-impl Device for Emitter {
-    fn new(tag: WbDeviceTag) -> Self {
+impl Emitter {
+    pub fn new(tag: WbDeviceTag) -> Self {
         assert_eq!(WbNodeType_WB_NODE_EMITTER, unsafe {
             wb_device_get_node_type(tag)
         });
         Self(tag)
     }
+}
 
+impl Device for Emitter {
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

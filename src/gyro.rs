@@ -20,6 +20,12 @@ pub enum GyroError {
 pub struct Gyro(WbDeviceTag);
 
 impl Gyro {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_GYRO, unsafe {
+            wb_device_get_node_type(tag)
+        });
+        Self(tag)
+    }
     pub fn lookup_table_size(&self) -> i32 {
         unsafe { wb_gyro_get_lookup_table_size(self.0) }
     }
@@ -47,13 +53,6 @@ impl Gyro {
 }
 
 impl Device for Gyro {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_GYRO, unsafe {
-            wb_device_get_node_type(tag)
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

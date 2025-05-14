@@ -21,6 +21,12 @@ pub enum DistanceSensorError {
 pub struct DistanceSensor(WbDeviceTag);
 
 impl DistanceSensor {
+    pub fn new(device: WbDeviceTag) -> Self {
+        assert_eq!(WbNodeType_WB_NODE_DISTANCE_SENSOR, unsafe {
+            wb_device_get_node_type(device)
+        });
+        Self(device)
+    }
     pub fn value(&self) -> f64 {
         unsafe { wb_distance_sensor_get_value(self.0) }
     }
@@ -58,13 +64,6 @@ impl DistanceSensor {
 }
 
 impl Device for DistanceSensor {
-    fn new(device: WbDeviceTag) -> Self {
-        assert_eq!(WbNodeType_WB_NODE_DISTANCE_SENSOR, unsafe {
-            wb_device_get_node_type(device)
-        });
-        Self(device)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }

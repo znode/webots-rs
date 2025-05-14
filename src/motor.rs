@@ -19,6 +19,14 @@ use crate::{Brake, Device, JointType, PositionSensor};
 pub struct Motor(WbDeviceTag);
 
 impl Motor {
+    pub fn new(tag: WbDeviceTag) -> Self {
+        assert!({
+            let node_type = unsafe { wb_device_get_node_type(tag) };
+            node_type == WbNodeType_WB_NODE_LINEAR_MOTOR
+                || node_type == WbNodeType_WB_NODE_ROTATIONAL_MOTOR
+        });
+        Self(tag)
+    }
     pub fn set_position(&self, position: f64) {
         unsafe { wb_motor_set_position(self.0, position) }
     }
@@ -155,15 +163,6 @@ impl Motor {
 }
 
 impl Device for Motor {
-    fn new(tag: WbDeviceTag) -> Self {
-        assert!({
-            let node_type = unsafe { wb_device_get_node_type(tag) };
-            node_type == WbNodeType_WB_NODE_LINEAR_MOTOR
-                || node_type == WbNodeType_WB_NODE_ROTATIONAL_MOTOR
-        });
-        Self(tag)
-    }
-
     fn tag(&self) -> WbDeviceTag {
         self.0
     }
