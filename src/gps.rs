@@ -41,6 +41,10 @@ impl Device for Gps {
         Self(tag)
     }
 
+    fn tag(&self) -> WbDeviceTag {
+        self.0
+    }
+
     fn name(&self) -> &str {
         unsafe {
             std::ffi::CStr::from_ptr(wb_device_get_name(self.0))

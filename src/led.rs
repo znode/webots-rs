@@ -24,6 +24,10 @@ impl Device for Led {
         Self(tag)
     }
 
+    fn tag(&self) -> WbDeviceTag {
+        self.0
+    }
+
     fn name(&self) -> &str {
         todo!()
     }
