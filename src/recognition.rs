@@ -10,11 +10,11 @@ use webots_bindings::{
     wb_camera_recognition_get_number_of_objects, wb_camera_recognition_get_objects,
     wb_camera_recognition_get_sampling_period, wb_camera_recognition_get_segmentation_image,
     wb_camera_recognition_has_segmentation, wb_camera_recognition_is_segmentation_enabled,
-    wb_camera_recognition_save_segmentation_image, wb_device_get_node_type, WbDeviceTag,
-    WbNodeType_WB_NODE_CAMERA,
+    wb_camera_recognition_save_segmentation_image, wb_device_get_model, wb_device_get_name,
+    wb_device_get_node_type, WbDeviceTag, WbNodeType_WB_NODE_CAMERA,
 };
 
-use crate::{Camera, Device};
+use crate::{Camera, Device, Sensor};
 
 #[derive(Debug, Error)]
 pub enum RecognitionError {
@@ -37,23 +37,11 @@ pub struct RecognitionObject<'a> {
 pub struct Recognition(WbDeviceTag);
 
 impl Recognition {
-    pub(crate) fn new(camera_device: WbDeviceTag) -> Self {
+    pub fn new(camera_device: WbDeviceTag) -> Self {
         assert_eq!(WbNodeType_WB_NODE_CAMERA, unsafe {
             wb_device_get_node_type(camera_device)
         });
         Self(camera_device)
-    }
-
-    pub fn enable(&self, sampling_period: i32) {
-        unsafe { wb_camera_recognition_enable(self.0, sampling_period) }
-    }
-
-    pub fn disable(&self) {
-        unsafe { wb_camera_recognition_disable(self.0) }
-    }
-
-    pub fn sampling_period(&self) -> i32 {
-        unsafe { wb_camera_recognition_get_sampling_period(self.0) }
     }
 
     pub fn number_of_objects(&self) -> i32 {
@@ -116,5 +104,49 @@ impl Recognition {
     pub fn save_segmentation_image(&self, filename: &str, quality: i32) -> i32 {
         let filename = CString::new(filename).expect("CString::new failed");
         unsafe { wb_camera_recognition_save_segmentation_image(self.0, filename.as_ptr(), quality) }
+    }
+}
+
+impl Device for Recognition {
+    fn tag(&self) -> WbDeviceTag {
+        self.0
+    }
+
+    fn name(&self) -> &str {
+        unsafe {
+            std::ffi::CStr::from_ptr(wb_device_get_name(self.0))
+                .to_str()
+                .unwrap()
+        }
+    }
+
+    fn model(&self) -> &str {
+        unsafe {
+            std::ffi::CStr::from_ptr(wb_device_get_model(self.0))
+                .to_str()
+                .unwrap()
+        }
+    }
+
+    fn node_type(&self) -> u32 {
+        unsafe { wb_device_get_node_type(self.0) }
+    }
+}
+
+impl Sensor for Recognition {
+    fn enable(&self, sampling_period: i32) {
+        unsafe { wb_camera_recognition_enable(self.0, sampling_period) }
+    }
+
+    fn disable(&self) {
+        unsafe { wb_camera_recognition_disable(self.0) }
+    }
+
+    fn sampling_period(&self) -> i32 {
+        unsafe { wb_camera_recognition_get_sampling_period(self.0) }
+    }
+
+    fn set_sampling_period(&self, _sampling_period: i32) {
+        unimplemented!()
     }
 }
