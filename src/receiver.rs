@@ -75,12 +75,7 @@ impl Receiver {
     }
 
     pub fn emitter_direction(&self) -> &[f64] {
-        unsafe {
-            std::slice::from_raw_parts(
-                wb_receiver_get_emitter_direction(self.0),
-                3 * std::mem::size_of::<f64>(),
-            )
-        }
+        unsafe { std::slice::from_raw_parts(wb_receiver_get_emitter_direction(self.0), 3) }
     }
 
     pub fn next(&self) -> Result<Option<Packet>, ReceiverError> {

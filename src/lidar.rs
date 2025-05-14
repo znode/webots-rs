@@ -103,10 +103,7 @@ impl Lidar {
     pub fn point_cloud(&self) -> &[WbLidarPoint] {
         let number_of_points = self.number_of_points();
         unsafe {
-            std::slice::from_raw_parts(
-                wb_lidar_get_point_cloud(self.0),
-                number_of_points as usize * std::mem::size_of::<WbLidarPoint>(),
-            )
+            std::slice::from_raw_parts(wb_lidar_get_point_cloud(self.0), number_of_points as usize)
         }
     }
 
@@ -115,7 +112,7 @@ impl Lidar {
         unsafe {
             std::slice::from_raw_parts(
                 wb_lidar_get_layer_point_cloud(self.0, layer),
-                number_of_points as usize * std::mem::size_of::<WbLidarPoint>(),
+                number_of_points as usize,
             )
         }
     }

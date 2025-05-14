@@ -18,18 +18,11 @@ impl Gps {
     }
 
     pub fn speed_vector(&self) -> &[f64] {
-        unsafe {
-            std::slice::from_raw_parts(
-                wb_gps_get_speed_vector(self.0),
-                3 * std::mem::size_of::<f64>(),
-            )
-        }
+        unsafe { std::slice::from_raw_parts(wb_gps_get_speed_vector(self.0), 3) }
     }
 
     pub fn value(&self) -> &[f64] {
-        unsafe {
-            std::slice::from_raw_parts(wb_gps_get_values(self.0), 3 * std::mem::size_of::<f64>())
-        }
+        unsafe { std::slice::from_raw_parts(wb_gps_get_values(self.0), 3) }
     }
 }
 

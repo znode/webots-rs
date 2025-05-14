@@ -11,12 +11,7 @@ pub struct Compass(WbDeviceTag);
 
 impl Compass {
     pub fn values(&self) -> &[f64] {
-        unsafe {
-            std::slice::from_raw_parts(
-                wb_compass_get_values(self.0),
-                3 * std::mem::size_of::<f64>(),
-            )
-        }
+        unsafe { std::slice::from_raw_parts(wb_compass_get_values(self.0), 3) }
     }
 
     pub fn lookup_table(&self) -> &[f64] {

@@ -9,13 +9,10 @@ use webots_bindings::{
 
 use crate::utils::cstr_to_str;
 
+#[derive(Default)]
 pub struct Joystick;
 
 impl Joystick {
-    pub fn new() -> Self {
-        Self
-    }
-
     pub fn enable(&self, sampling_period: i32) {
         unsafe {
             wb_joystick_enable(sampling_period);

@@ -34,7 +34,7 @@ impl Radar {
         unsafe {
             std::slice::from_raw_parts(
                 wb_radar_get_targets(self.0),
-                self.number_of_targets() as usize * std::mem::size_of::<WbRadarTarget>(),
+                self.number_of_targets() as usize,
             )
         }
     }
