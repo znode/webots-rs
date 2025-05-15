@@ -6,7 +6,7 @@ fn main() {
     const TIME_STEP: i32 = 64;
 
     println!("Rust controller has started");
-    let _robot = Robot::default();
+    Robot::init();
 
     let distance_sensor_names = vec!["ps0", "ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"];
     let distance_sensors: Vec<DistanceSensor> = distance_sensor_names

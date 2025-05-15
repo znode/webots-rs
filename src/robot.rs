@@ -11,22 +11,12 @@ use webots_bindings::{
 };
 
 use crate::{
-    Accelerometer, Brake, Camera, Device, DistanceSensor, Gyro, InertialUnit, Keyboard, Motor,
-    PositionSensor, RangeFinder, Receiver, RobotMode, TouchSensor,
+    Accelerometer, Altimeter, Brake, Camera, Compass, Display, DistanceSensor, Emitter, Gps, Gyro,
+    InertialUnit, Joystick, Keyboard, Led, Lidar, LightSensor, Motor, Mouse, PositionSensor, Radar,
+    RangeFinder, Receiver, RobotMode, TouchSensor,
 };
 
-pub struct Robot {
-    devices: Vec<Box<dyn Device>>,
-}
-
-impl Default for Robot {
-    fn default() -> Self {
-        unsafe {
-            wb_robot_init();
-        }
-        Self { devices: vec![] }
-    }
-}
+pub struct Robot;
 
 impl Drop for Robot {
     fn drop(&mut self) {
@@ -37,6 +27,12 @@ impl Drop for Robot {
 }
 
 impl Robot {
+    pub fn init() {
+        unsafe {
+            wb_robot_init();
+        }
+    }
+
     pub fn step(duration: i32) -> i32 {
         unsafe { wb_robot_step(duration) }
     }
@@ -53,17 +49,17 @@ impl Robot {
         }
     }
 
-    pub fn name<'a>() -> &'a [u8] {
+    pub fn name<'a>() -> &'a str {
         unsafe {
             let name = wb_robot_get_name();
-            CStr::from_ptr(name).to_bytes()
+            CStr::from_ptr(name).to_str().unwrap()
         }
     }
 
-    pub fn model<'a>() -> &'a [u8] {
+    pub fn model<'a>() -> &'a str {
         unsafe {
             let model = wb_robot_get_model();
-            CStr::from_ptr(model).to_bytes()
+            CStr::from_ptr(model).to_str().unwrap()
         }
     }
 
@@ -137,6 +133,12 @@ impl Robot {
         Accelerometer::new(device)
     }
 
+    pub fn altimeter(name: &str) -> Altimeter {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Altimeter::new(device)
+    }
+
     pub fn brake(name: &str) -> Brake {
         let name = CString::new(name).expect("CString::new failed");
         let device = unsafe { wb_robot_get_device(name.as_ptr()) };
@@ -149,10 +151,34 @@ impl Robot {
         Camera::new(device)
     }
 
+    pub fn compass(name: &str) -> Compass {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Compass::new(device)
+    }
+
+    pub fn display(name: &str) -> Display {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Display::new(device)
+    }
+
     pub fn distance_sensor(name: &str) -> DistanceSensor {
         let name = CString::new(name).expect("CString::new failed");
         let device = unsafe { wb_robot_get_device(name.as_ptr()) };
         DistanceSensor::new(device)
+    }
+
+    pub fn emitter(name: &str) -> Emitter {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Emitter::new(device)
+    }
+
+    pub fn gps(name: &str) -> Gps {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Gps::new(device)
     }
 
     pub fn gyro(name: &str) -> Gyro {
@@ -167,8 +193,30 @@ impl Robot {
         InertialUnit::new(device)
     }
 
+    pub fn joystick() -> Joystick {
+        Joystick
+    }
+
     pub fn keyboard() -> Keyboard {
         Keyboard
+    }
+
+    pub fn led(name: &str) -> Led {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Led::new(device)
+    }
+
+    pub fn lidar(name: &str) -> Lidar {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Lidar::new(device)
+    }
+
+    pub fn light_sensor(name: &str) -> LightSensor {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        LightSensor::new(device)
     }
 
     pub fn motor(name: &str) -> Motor {
@@ -177,10 +225,20 @@ impl Robot {
         Motor::new(device)
     }
 
+    pub fn mouse() -> Mouse {
+        Mouse
+    }
+
     pub fn position_sensor(name: &str) -> PositionSensor {
         let name = CString::new(name).expect("CString::new failed");
         let device = unsafe { wb_robot_get_device(name.as_ptr()) };
         PositionSensor::new(device)
+    }
+
+    pub fn radar(name: &str) -> Radar {
+        let name = CString::new(name).expect("CString::new failed");
+        let device = unsafe { wb_robot_get_device(name.as_ptr()) };
+        Radar::new(device)
     }
 
     pub fn range_finder(name: &str) -> RangeFinder {

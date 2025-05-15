@@ -23,12 +23,16 @@ impl Gps {
         unsafe { wb_gps_get_speed(self.0) }
     }
 
-    pub fn speed_vector(&self) -> &[f64] {
-        unsafe { std::slice::from_raw_parts(wb_gps_get_speed_vector(self.0), 3) }
+    pub fn speeds(&self) -> [f64; 3] {
+        let speeds = unsafe { std::slice::from_raw_parts(wb_gps_get_speed_vector(self.0), 3) };
+        assert!(speeds.len() == 3);
+        [speeds[0], speeds[1], speeds[2]]
     }
 
-    pub fn value(&self) -> &[f64] {
-        unsafe { std::slice::from_raw_parts(wb_gps_get_values(self.0), 3) }
+    pub fn location(&self) -> [f64; 3] {
+        let location = unsafe { std::slice::from_raw_parts(wb_gps_get_values(self.0), 3) };
+        assert!(location.len() == 3);
+        [location[0], location[1], location[2]]
     }
 }
 
