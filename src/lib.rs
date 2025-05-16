@@ -30,6 +30,7 @@ mod robot_mode;
 mod sensor;
 mod touch_sensor;
 mod touch_sensor_type;
+mod types;
 mod utils;
 
 pub use accelerometer::Accelerometer;
@@ -64,3 +65,4 @@ pub use robot_mode::RobotMode;
 pub use sensor::Sensor;
 pub use touch_sensor::TouchSensor;
 pub use touch_sensor_type::TouchSensorType;
+pub use types::*;
