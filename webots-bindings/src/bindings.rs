@@ -108,6 +108,10 @@ pub const __MAC_15_1: u32 = 150100;
 pub const __MAC_15_2: u32 = 150200;
 pub const __MAC_15_3: u32 = 150300;
 pub const __MAC_15_4: u32 = 150400;
+pub const __MAC_15_5: u32 = 150500;
+pub const __MAC_15_6: u32 = 150600;
+pub const __MAC_16_0: u32 = 160000;
+pub const __MAC_26_0: u32 = 260000;
 pub const __IPHONE_2_0: u32 = 20000;
 pub const __IPHONE_2_1: u32 = 20100;
 pub const __IPHONE_2_2: u32 = 20200;
@@ -160,7 +164,6 @@ pub const __IPHONE_14_1: u32 = 140100;
 pub const __IPHONE_14_2: u32 = 140200;
 pub const __IPHONE_14_3: u32 = 140300;
 pub const __IPHONE_14_5: u32 = 140500;
-pub const __IPHONE_14_4: u32 = 140400;
 pub const __IPHONE_14_6: u32 = 140600;
 pub const __IPHONE_14_7: u32 = 140700;
 pub const __IPHONE_14_8: u32 = 140800;
@@ -194,6 +197,10 @@ pub const __IPHONE_18_1: u32 = 180100;
 pub const __IPHONE_18_2: u32 = 180200;
 pub const __IPHONE_18_3: u32 = 180300;
 pub const __IPHONE_18_4: u32 = 180400;
+pub const __IPHONE_18_5: u32 = 180500;
+pub const __IPHONE_18_6: u32 = 180600;
+pub const __IPHONE_19_0: u32 = 190000;
+pub const __IPHONE_26_0: u32 = 260000;
 pub const __WATCHOS_1_0: u32 = 10000;
 pub const __WATCHOS_2_0: u32 = 20000;
 pub const __WATCHOS_2_1: u32 = 20100;
@@ -248,6 +255,10 @@ pub const __WATCHOS_11_1: u32 = 110100;
 pub const __WATCHOS_11_2: u32 = 110200;
 pub const __WATCHOS_11_3: u32 = 110300;
 pub const __WATCHOS_11_4: u32 = 110400;
+pub const __WATCHOS_11_5: u32 = 110500;
+pub const __WATCHOS_11_6: u32 = 110600;
+pub const __WATCHOS_12_0: u32 = 120000;
+pub const __WATCHOS_26_0: u32 = 260000;
 pub const __TVOS_9_0: u32 = 90000;
 pub const __TVOS_9_1: u32 = 90100;
 pub const __TVOS_9_2: u32 = 90200;
@@ -302,6 +313,10 @@ pub const __TVOS_18_1: u32 = 180100;
 pub const __TVOS_18_2: u32 = 180200;
 pub const __TVOS_18_3: u32 = 180300;
 pub const __TVOS_18_4: u32 = 180400;
+pub const __TVOS_18_5: u32 = 180500;
+pub const __TVOS_18_6: u32 = 180600;
+pub const __TVOS_19_0: u32 = 190000;
+pub const __TVOS_26_0: u32 = 260000;
 pub const __BRIDGEOS_2_0: u32 = 20000;
 pub const __BRIDGEOS_3_0: u32 = 30000;
 pub const __BRIDGEOS_3_1: u32 = 30100;
@@ -334,6 +349,9 @@ pub const __BRIDGEOS_9_1: u32 = 90100;
 pub const __BRIDGEOS_9_2: u32 = 90200;
 pub const __BRIDGEOS_9_3: u32 = 90300;
 pub const __BRIDGEOS_9_4: u32 = 90400;
+pub const __BRIDGEOS_9_5: u32 = 90500;
+pub const __BRIDGEOS_9_6: u32 = 90600;
+pub const __BRIDGEOS_10_0: u32 = 100000;
 pub const __DRIVERKIT_19_0: u32 = 190000;
 pub const __DRIVERKIT_20_0: u32 = 200000;
 pub const __DRIVERKIT_21_0: u32 = 210000;
@@ -353,6 +371,9 @@ pub const __DRIVERKIT_24_1: u32 = 240100;
 pub const __DRIVERKIT_24_2: u32 = 240200;
 pub const __DRIVERKIT_24_3: u32 = 240300;
 pub const __DRIVERKIT_24_4: u32 = 240400;
+pub const __DRIVERKIT_24_5: u32 = 240500;
+pub const __DRIVERKIT_24_6: u32 = 240600;
+pub const __DRIVERKIT_25_0: u32 = 250000;
 pub const __VISIONOS_1_0: u32 = 10000;
 pub const __VISIONOS_1_1: u32 = 10100;
 pub const __VISIONOS_1_2: u32 = 10200;
@@ -362,6 +383,10 @@ pub const __VISIONOS_2_1: u32 = 20100;
 pub const __VISIONOS_2_2: u32 = 20200;
 pub const __VISIONOS_2_3: u32 = 20300;
 pub const __VISIONOS_2_4: u32 = 20400;
+pub const __VISIONOS_2_5: u32 = 20500;
+pub const __VISIONOS_2_6: u32 = 20600;
+pub const __VISIONOS_3_0: u32 = 30000;
+pub const __VISIONOS_26_0: u32 = 260000;
 pub const MAC_OS_X_VERSION_10_0: u32 = 1000;
 pub const MAC_OS_X_VERSION_10_1: u32 = 1010;
 pub const MAC_OS_X_VERSION_10_2: u32 = 1020;
@@ -431,10 +456,14 @@ pub const MAC_OS_VERSION_15_1: u32 = 150100;
 pub const MAC_OS_VERSION_15_2: u32 = 150200;
 pub const MAC_OS_VERSION_15_3: u32 = 150300;
 pub const MAC_OS_VERSION_15_4: u32 = 150400;
+pub const MAC_OS_VERSION_15_5: u32 = 150500;
+pub const MAC_OS_VERSION_15_6: u32 = 150600;
+pub const MAC_OS_VERSION_16_0: u32 = 160000;
+pub const MAC_OS_VERSION_26_0: u32 = 260000;
 pub const __AVAILABILITY_VERSIONS_VERSION_HASH: u32 = 93585900;
 pub const __AVAILABILITY_VERSIONS_VERSION_STRING: &[u8; 6] = b"Local\0";
 pub const __AVAILABILITY_FILE: &[u8; 23] = b"AvailabilityVersions.h\0";
-pub const __MAC_OS_X_VERSION_MAX_ALLOWED: u32 = 150400;
+pub const __MAC_OS_X_VERSION_MAX_ALLOWED: u32 = 260000;
 pub const __ENABLE_LEGACY_MAC_AVAILABILITY: u32 = 1;
 pub const FP_SUPERNORMAL: u32 = 6;
 pub const FP_FAST_FMA: u32 = 1;
@@ -488,7 +517,6 @@ pub const __DARWIN_WCHAR_MIN: i32 = -2147483648;
 pub const _FORTIFY_SOURCE: u32 = 2;
 pub const USE_CLANG_STDDEF: u32 = 0;
 pub const _USE_FORTIFY_LEVEL: u32 = 2;
-pub const __HAS_FIXED_CHK_PROTOTYPES: u32 = 1;
 pub const WB_SUPERVISOR_MOVIE_READY: u32 = 0;
 pub const WB_SUPERVISOR_MOVIE_RECORDING: u32 = 1;
 pub const WB_SUPERVISOR_MOVIE_SAVING: u32 = 2;
@@ -501,6 +529,7 @@ pub const RENAME_SWAP: u32 = 2;
 pub const RENAME_EXCL: u32 = 4;
 pub const RENAME_RESERVED1: u32 = 8;
 pub const RENAME_NOFOLLOW_ANY: u32 = 16;
+pub const RENAME_RESOLVE_BENEATH: u32 = 32;
 pub const SEEK_SET: u32 = 0;
 pub const SEEK_CUR: u32 = 1;
 pub const SEEK_END: u32 = 2;
@@ -4899,15 +4928,6 @@ unsafe extern "C" {
     ) -> *mut FILE;
 }
 unsafe extern "C" {
-    pub fn __sprintf_chk(
-        arg1: *mut ::std::os::raw::c_char,
-        arg2: ::std::os::raw::c_int,
-        arg3: usize,
-        arg4: *const ::std::os::raw::c_char,
-        ...
-    ) -> ::std::os::raw::c_int;
-}
-unsafe extern "C" {
     pub fn __snprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
         __maxlen: usize,
@@ -4918,8 +4938,9 @@ unsafe extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 unsafe extern "C" {
-    pub fn __vsprintf_chk(
+    pub fn __vsnprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
+        __maxlen: usize,
         arg2: ::std::os::raw::c_int,
         arg3: usize,
         arg4: *const ::std::os::raw::c_char,
@@ -4927,9 +4948,17 @@ unsafe extern "C" {
     ) -> ::std::os::raw::c_int;
 }
 unsafe extern "C" {
-    pub fn __vsnprintf_chk(
+    pub fn __sprintf_chk(
         arg1: *mut ::std::os::raw::c_char,
-        __maxlen: usize,
+        arg2: ::std::os::raw::c_int,
+        arg3: usize,
+        arg4: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+unsafe extern "C" {
+    pub fn __vsprintf_chk(
+        arg1: *mut ::std::os::raw::c_char,
         arg2: ::std::os::raw::c_int,
         arg3: usize,
         arg4: *const ::std::os::raw::c_char,
