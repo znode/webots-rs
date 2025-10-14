@@ -7,8 +7,8 @@ name = "webots"
 version = "0.8.0"
 
 [dependencies]
-libc = "0.2.172"
-thiserror = "1.0.37"
+libc = "0.2"
+thiserror = "2.0"
 webots-bindings = { path = "webots-bindings", version = "0.8.0" }
 
 [[example]]
