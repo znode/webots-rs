@@ -7,7 +7,7 @@ use webots_bindings::{
     wb_robot_get_mode, wb_robot_get_model, wb_robot_get_name, wb_robot_get_project_path,
     wb_robot_get_supervisor, wb_robot_get_synchronization, wb_robot_get_time, wb_robot_get_urdf,
     wb_robot_get_world_path, wb_robot_init, wb_robot_set_custom_data, wb_robot_set_mode,
-    wb_robot_step,
+    wb_robot_step, wb_robot_step_begin, wb_robot_step_end,
 };
 
 use crate::{
@@ -35,6 +35,14 @@ impl Robot {
 
     pub fn step(duration: i32) -> i32 {
         unsafe { wb_robot_step(duration) }
+    }
+
+    pub fn step_begin(duration: i32) -> i32 {
+        unsafe { wb_robot_step_begin(duration) }
+    }
+
+    pub fn step_end() -> i32 {
+        unsafe { wb_robot_step_end() }
     }
 
     pub fn time() -> f64 {
