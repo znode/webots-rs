@@ -7,12 +7,12 @@ static WEBOTS_WINDOWS_PATH: &'static str = "C:\\Program Files\\Webots";
 
 fn main() {
     let env_path = env::var("WEBOTS_PATH").ok();
-    let webots_path = if cfg!(target_os = "linux") {
+    let webots_path = if let Some(path) = env_path {
+        path
+    } else if cfg!(target_os = "linux") {
         WEBOTS_LINUX_PATH.to_string()
     } else if cfg!(target_os = "macos") {
         WEBOTS_MACOS_PATH.to_string()
-    } else if let Some(path) = env_path {
-        path
     } else if cfg!(target_os = "windows") {
         WEBOTS_WINDOWS_PATH.to_string()
     } else {
