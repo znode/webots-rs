@@ -1,9 +1,9 @@
 use std::ffi::c_char;
 
 use webots_bindings::{
-    wbu_motion_delete, wbu_motion_get_duration, wbu_motion_get_time, wbu_motion_is_over,
-    wbu_motion_new, wbu_motion_play, wbu_motion_set_loop, wbu_motion_set_reverse,
-    wbu_motion_set_time, wbu_motion_stop, WbMotionRef,
+    WbMotionRef, wbu_motion_delete, wbu_motion_get_duration, wbu_motion_get_time,
+    wbu_motion_is_over, wbu_motion_new, wbu_motion_play, wbu_motion_set_loop,
+    wbu_motion_set_reverse, wbu_motion_set_time, wbu_motion_stop,
 };
 
 pub struct Motion(WbMotionRef);
@@ -36,13 +36,13 @@ impl Motion {
         }
     }
 
-    pub fn set_loop(&self, lop: i8) {
+    pub fn set_loop(&self, lop: c_char) {
         unsafe {
             wbu_motion_set_loop(self.0, lop);
         }
     }
 
-    pub fn set_reverse(&self, reverse: i8) {
+    pub fn set_reverse(&self, reverse: c_char) {
         unsafe {
             wbu_motion_set_reverse(self.0, reverse);
         }

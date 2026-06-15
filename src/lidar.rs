@@ -1,12 +1,13 @@
 use webots_bindings::{
-    wb_device_get_model, wb_device_get_name, wb_device_get_node_type, wb_lidar_disable,
-    wb_lidar_disable_point_cloud, wb_lidar_enable, wb_lidar_enable_point_cloud, wb_lidar_get_fov,
-    wb_lidar_get_frequency, wb_lidar_get_horizontal_resolution, wb_lidar_get_layer_point_cloud,
+    WbDeviceTag, WbLidarPoint, WbNodeType_WB_NODE_LIDAR, wb_device_get_model, wb_device_get_name,
+    wb_device_get_node_type, wb_lidar_disable, wb_lidar_disable_point_cloud, wb_lidar_enable,
+    wb_lidar_enable_point_cloud, wb_lidar_get_fov, wb_lidar_get_frequency,
+    wb_lidar_get_horizontal_resolution, wb_lidar_get_layer_point_cloud,
     wb_lidar_get_layer_range_image, wb_lidar_get_max_frequency, wb_lidar_get_max_range,
     wb_lidar_get_min_frequency, wb_lidar_get_min_range, wb_lidar_get_number_of_layers,
     wb_lidar_get_number_of_points, wb_lidar_get_point_cloud, wb_lidar_get_range_image,
     wb_lidar_get_sampling_period, wb_lidar_get_vertical_fov, wb_lidar_is_point_cloud_enabled,
-    wb_lidar_set_frequency, WbDeviceTag, WbLidarPoint, WbNodeType_WB_NODE_LIDAR,
+    wb_lidar_set_frequency,
 };
 
 use crate::{Device, Sensor};
@@ -103,7 +104,7 @@ impl Lidar {
     }
 
     pub fn is_point_cloud_enabled(&self) -> bool {
-        unsafe { wb_lidar_is_point_cloud_enabled(self.0) }.abs() != 0
+        unsafe { wb_lidar_is_point_cloud_enabled(self.0) != 0 }
     }
 
     pub fn point_cloud(&self) -> &[WbLidarPoint] {

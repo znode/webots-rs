@@ -1,11 +1,11 @@
-use std::slice::from_raw_parts;
+use std::{ffi::c_char, slice::from_raw_parts};
 
 use webots_bindings::{
-    wb_device_get_model, wb_device_get_name, wb_device_get_node_type, wb_range_finder_disable,
-    wb_range_finder_enable, wb_range_finder_get_fov, wb_range_finder_get_height,
-    wb_range_finder_get_max_range, wb_range_finder_get_min_range, wb_range_finder_get_range_image,
+    WbDeviceTag, WbNodeType_WB_NODE_RANGE_FINDER, wb_device_get_model, wb_device_get_name,
+    wb_device_get_node_type, wb_range_finder_disable, wb_range_finder_enable,
+    wb_range_finder_get_fov, wb_range_finder_get_height, wb_range_finder_get_max_range,
+    wb_range_finder_get_min_range, wb_range_finder_get_range_image,
     wb_range_finder_get_sampling_period, wb_range_finder_get_width, wb_range_finder_save_image,
-    WbDeviceTag, WbNodeType_WB_NODE_RANGE_FINDER,
 };
 
 use crate::{Device, Sensor};
@@ -68,7 +68,7 @@ impl RangeFinder {
     }
 
     pub fn save_image(&self, filename: &str, quality: i32) -> i32 {
-        unsafe { wb_range_finder_save_image(self.0, filename.as_ptr() as *const i8, quality) }
+        unsafe { wb_range_finder_save_image(self.0, filename.as_ptr() as *const c_char, quality) }
     }
 }
 
