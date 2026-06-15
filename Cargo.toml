@@ -1,6 +1,6 @@
 [package]
 description = "Webots bindings for Rust"
-edition = "2021"
+edition = "2024"
 homepage = "https://github.com/HULKs/webots-rs"
 license = "MIT"
 name = "webots"
