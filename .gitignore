@@ -5,3 +5,4 @@ src/bindings.rs
 .*.wbproj
 *~
 #*#
+webots-bindings/src/bindings.rs
