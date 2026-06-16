@@ -9,6 +9,7 @@ version = "0.8.0"
 [dependencies]
 libc = "0.2"
 thiserror = "2.0"
+tracing = "0.1"
 webots-bindings = { path = "webots-bindings", version = "0.8.0" }
 
 [[example]]
