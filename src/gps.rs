@@ -1,7 +1,7 @@
 use webots_bindings::{
-    wb_device_get_model, wb_device_get_name, wb_device_get_node_type, wb_gps_disable,
-    wb_gps_enable, wb_gps_get_coordinate_system, wb_gps_get_sampling_period, wb_gps_get_speed,
-    wb_gps_get_speed_vector, wb_gps_get_values, WbDeviceTag, WbNodeType_WB_NODE_GPS,
+    WbDeviceTag, WbNodeType_WB_NODE_GPS, wb_device_get_model, wb_device_get_name,
+    wb_device_get_node_type, wb_gps_disable, wb_gps_enable, wb_gps_get_coordinate_system,
+    wb_gps_get_sampling_period, wb_gps_get_speed, wb_gps_get_speed_vector, wb_gps_get_values,
 };
 
 use crate::{Device, Sensor};
@@ -23,12 +23,14 @@ impl Gps {
         unsafe { wb_gps_get_speed(self.0) }
     }
 
+    /// GPS speed in meters per second
     pub fn speeds(&self) -> [f64; 3] {
         let speeds = unsafe { std::slice::from_raw_parts(wb_gps_get_speed_vector(self.0), 3) };
         assert!(speeds.len() == 3);
         [speeds[0], speeds[1], speeds[2]]
     }
 
+    /// x-y-z, latitude-longitude-altitude
     pub fn location(&self) -> [f64; 3] {
         let location = unsafe { std::slice::from_raw_parts(wb_gps_get_values(self.0), 3) };
         assert!(location.len() == 3);

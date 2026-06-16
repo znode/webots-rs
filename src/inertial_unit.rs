@@ -1,9 +1,9 @@
 use thiserror::Error;
 use webots_bindings::{
-    wb_device_get_model, wb_device_get_name, wb_device_get_node_type, wb_inertial_unit_disable,
-    wb_inertial_unit_enable, wb_inertial_unit_get_noise, wb_inertial_unit_get_quaternion,
-    wb_inertial_unit_get_roll_pitch_yaw, wb_inertial_unit_get_sampling_period, WbDeviceTag,
-    WbNodeType_WB_NODE_INERTIAL_UNIT,
+    WbDeviceTag, WbNodeType_WB_NODE_INERTIAL_UNIT, wb_device_get_model, wb_device_get_name,
+    wb_device_get_node_type, wb_inertial_unit_disable, wb_inertial_unit_enable,
+    wb_inertial_unit_get_noise, wb_inertial_unit_get_quaternion,
+    wb_inertial_unit_get_roll_pitch_yaw, wb_inertial_unit_get_sampling_period,
 };
 
 use crate::{Device, Sensor};
@@ -43,6 +43,7 @@ impl InertialUnit {
         }
     }
 
+    /// x-y-z-w quaternion
     pub fn quaternion(&self) -> Result<[f64; 4], InertialUnitError> {
         unsafe {
             let quaternion = wb_inertial_unit_get_quaternion(self.0);
