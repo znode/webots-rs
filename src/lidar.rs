@@ -1,3 +1,4 @@
+use tracing::error;
 use webots_bindings::{
     WbDeviceTag, WbLidarPoint, WbNodeType_WB_NODE_LIDAR, wb_device_get_model, wb_device_get_name,
     wb_device_get_node_type, wb_lidar_disable, wb_lidar_disable_point_cloud, wb_lidar_enable,
@@ -63,8 +64,13 @@ impl Lidar {
 
     pub fn range_image(&self) -> &[f32] {
         unsafe {
+            let ptr = wb_lidar_get_range_image(self.0);
+            if ptr.is_null() {
+                error!("Failed to get range image: pointer is null");
+                return &[];
+            }
             std::slice::from_raw_parts(
-                wb_lidar_get_range_image(self.0),
+                ptr,
                 (self.horizontal_resolution() * self.number_of_layers()) as usize,
             )
         }
@@ -80,10 +86,12 @@ impl Lidar {
 
     pub fn layer_range_image(&self, layer: i32) -> &[f32] {
         unsafe {
-            std::slice::from_raw_parts(
-                wb_lidar_get_layer_range_image(self.0, layer),
-                (self.horizontal_resolution()) as usize,
-            )
+            let ptr = wb_lidar_get_layer_range_image(self.0, layer);
+            if ptr.is_null() {
+                error!("Failed to get layer range image: pointer is null");
+                return &[];
+            }
+            std::slice::from_raw_parts(ptr, (self.horizontal_resolution()) as usize)
         }
     }
 
@@ -110,17 +118,24 @@ impl Lidar {
     pub fn point_cloud(&self) -> &[WbLidarPoint] {
         let number_of_points = self.number_of_points();
         unsafe {
-            std::slice::from_raw_parts(wb_lidar_get_point_cloud(self.0), number_of_points as usize)
+            let ptr = wb_lidar_get_point_cloud(self.0);
+            if ptr.is_null() {
+                error!("Failed to get point cloud: pointer is null");
+                return &[];
+            }
+            std::slice::from_raw_parts(ptr, number_of_points as usize)
         }
     }
 
     pub fn layer_point_cloud(&self, layer: i32) -> &[WbLidarPoint] {
         let number_of_points = self.number_of_points() / self.number_of_layers();
         unsafe {
-            std::slice::from_raw_parts(
-                wb_lidar_get_layer_point_cloud(self.0, layer),
-                number_of_points as usize,
-            )
+            let ptr = wb_lidar_get_layer_point_cloud(self.0, layer);
+            if ptr.is_null() {
+                error!("Failed to get layer point cloud: pointer is null");
+                return &[];
+            }
+            std::slice::from_raw_parts(ptr, number_of_points as usize)
         }
     }
 }
